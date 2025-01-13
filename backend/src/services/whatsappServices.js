@@ -1,46 +1,20 @@
-// const https = require("https");
-// const { type } = require("os");
 const axios = require("axios");
-const { json } = require("express");
 const { io } = require("../SocketIO/server");
 const { getAsiaKolkataTime } = require("../controllers/time");
+
 function SendMessageWhatsApp(data) {
-  // const options = {
-  //     host: "graph.facebook.com",
-  //     path: "/v21.0/173000262573577/messages",
-  //     method: "POST",
-  //     body: data,
-  //     headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": "Bearer EAANHvhSji6cBOw8RvdlD0ft3u7PqnZChM8XghhB31ohTBk9WZCkOa44xbLZBzgv5eFL5R1DIHkWGkTf2rR2yiwMLroZCBMSdiDi3dIOfqNHbgdyydFmYShGjPSbcAtCon1osKsNqQZCLAtjEs9jPSHb7rf7ZA1uLq9rwLkFWbIEYYYkQJA38za6Se7giYDpdA4yt2pZAIWE4z1ZCgPS3uAhfpxxrrkHiBdGZChmMANsuLgV8E7gZDZD",
-  //     }
-  // };
-
-  // const req = https.request(options, (res) => {
-  //     res.on("data", (d) => {
-  //         process.stdout.write(d);
-  //     });
-  // });
-
-  // req.on("error", (error) => {
-  //     console.error(error);
-  // });
-
-  // req.write(data);
-  // req.end();
-
   const url = "https://graph.facebook.com/v21.0/173000262573577/messages";
 
   const headers = {
     "Content-Type": "application/json",
     Authorization:
-      "Bearer EAANHvhSji6cBOzOEGhxdkJh8kHMs9R9lXaOyKdwiIJ5F0lMqj3riKGI4ZBE9EVuTMoM3wOte099kSVrNqI2HJstErlGVmKRGgGQhYWQa3uLVDUxHcb2D5eZAoZAVWHvWL3I8zi8kC2ZBiSGj5EAFVRNVS1qufs6C7hzZAdLZBfdRH2oXf0dTHREqZACIDc1X44KQJPo3NEafoMdGIkWIARJs3kp8Iasu0DH0ZBcbK58uo3sZD",
+      "Bearer EAANHvhSji6cBO8qOA1AiGi3UtIFVsOUxiJCQjCzYQ149yICHjZARAIfnSdSWRH1GvA5uoToxFx605oE0QmuCZA5yVpA4wCHQ69U57FKMwDUv6hGwzc2WSaLt7ZBfPxndJ50CDiuCRgGOn0F19dh324fDcI71GiLLJ4KWyw1WZCGrZCl0Qn2wABtgVeIIwn0QbIpo8daX0Hm5ZCpS2nktSXTFf8mLO6TBDutlG3yu3ZBjAEZD",
   };
+
   axios
     .post(url, data, { headers })
     .then((response) => {
-      console.log("Message sent server say hai  successfully:", response.data);
-      
+      console.log("Message sent successfully:", response.data);
     })
     .catch((error) => {
       console.error(
@@ -49,32 +23,40 @@ function SendMessageWhatsApp(data) {
       );
     });
 
-  // const replymessage=JSON.parse(data);
-  // console.log("replymessage",replymessage);
-  //  const data1={
-  //    number:replymessage.to,
-  //    text:replymessage.text.body,
-  //    timestamp: getAsiaKolkataTime(),
-  //    sender:"user"
-  //  }
-  //  io.emit("message", data1 );
-  //  console.log("Message sent server Thik hai Bhaiya");
-
+  try {
     // Parse the original message data
     const replymessage = JSON.parse(data);
-
-    // Handle the UI data for a template message
-    let messageText;
+    console.log("replymessage", replymessage);
+    //console.log("replymessage.type1", replymessage.template.components[0].parameters[0].image.link);
+    let messageText = "Unsupported message type.";
+    let imageLink = null;
+    let audioLink = null;
+    let button_1 = null;
+    let button_2 = null;
+    let interactiveText = null;
+    let templateimage = null;
+    // Handle different message types with null checks
     if (replymessage.type === "template") {
-      messageText = `Template: ${replymessage.template.name}`;
-    }
-    else if(replymessage.type === "interactive")
-      {
-        messageText = `Interactive: ${replymessage.interactive.type}`
-      } else if (replymessage.text) {
-      messageText = replymessage.text.body;
-    } else {
-      messageText = "Unsupported message type.";
+      messageText = replymessage.template.name;
+      templateimage =
+        replymessage.template.components[0].parameters[0].image.link;
+    } else if (replymessage.type === "interactive") {
+      interactiveText = replymessage.interactive?.body?.text || null;
+      button_1 =
+        replymessage.interactive?.action?.buttons?.[0]?.reply?.title || null;
+      button_2 =
+        replymessage.interactive?.action?.buttons?.[1]?.reply?.title || null;
+      messageText = `Interactive: ${
+        replymessage.interactive?.type || "unknown"
+      }`;
+    } else if (replymessage.type === "text") {
+      messageText = replymessage.text?.body || "No text content.";
+    } else if (replymessage.type === "image") {
+      messageText = "Image received";
+      imageLink = replymessage.image?.link || null; // Extract image link
+    } else if (replymessage.type === "audio") {
+      messageText = "Audio received";
+      audioLink = replymessage.audio?.link || null; // Extract audio link
     }
 
     const uiData = {
@@ -82,12 +64,23 @@ function SendMessageWhatsApp(data) {
       text: messageText,
       timestamp: getAsiaKolkataTime(),
       sender: "user",
+      type: replymessage.type,
+      image: imageLink,
+      audio: audioLink,
+      button_1,
+      button_2,
+      interactiveText,
+      templateimage,
     };
+
+    console.log("uiData", uiData);
 
     // Emit the message data via Socket.IO
     io.emit("message", uiData);
     console.log("Message emitted to UI successfully.");
-
+  } catch (error) {
+    console.error("Error parsing or emitting message:", error.message);
+  }
 }
 
 module.exports = { SendMessageWhatsApp };

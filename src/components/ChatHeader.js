@@ -1,6 +1,6 @@
 import React from "react";
 
-const ChatHeader = ({ currentChat,setUser ,user}) => {
+const ChatHeader = ({ currentChat}) => {
   return (
     <div className="flex items-center justify-between p-4 bg-gray-200 border-b border-gray-300">
       <div className="text-lg font-medium">{currentChat}</div>
@@ -8,7 +8,7 @@ const ChatHeader = ({ currentChat,setUser ,user}) => {
         <button className="text-gray-500">🔍</button>
         <button className="text-gray-500">📞</button>
         <button className="text-gray-500">⋮</button>
-        <button onClick={() => setUser(user+1)}  className="text-gray-500">👤</button>
+        <button className="text-gray-500">👤</button>
       </div> 
     </div>
   );

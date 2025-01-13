@@ -10,6 +10,19 @@ function MessageText(textResponse, number) {
   return data;
 }
 
+
+function MessageImage(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    to: number,
+    type: "image",
+    image: {
+      link: "https://biostoragecloud.blob.core.windows.net/resource-udemy-whatsapp-node/image_whatsapp.png",
+    },
+  });
+  return data;
+}
+
 function MessageTemplate(number)
 {
    const data = JSON.stringify({
@@ -119,4 +132,130 @@ function MessageLists(number) {
   return data;
 }
 
-module.exports = { MessageText, TemplateApple, MessageLists ,MessageTemplate};
+function MessageAudio(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    to: number,
+    type: "audio",
+    audio: {
+      link: "https://biostoragecloud.blob.core.windows.net/resource-udemy-whatsapp-node/audio_whatsapp.mp3",
+    },
+  });
+  return data;
+}
+
+function MessageButtons(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    to: number,
+    type: "interactive",
+    interactive: {
+      type: "button",
+      body: {
+        text: "Confirm your order",
+      },
+      action: {
+        buttons: [
+          {
+            type: "reply",
+            reply: {
+              id: "001",
+              title: "Sucessfull",
+            },
+          },
+          {
+            type: "reply",
+            reply: {
+              id: "002",
+              title: "Order Pending",
+            },
+          },
+        ],
+      },
+    },
+  });
+  return data;
+}
+
+function Messagemobile(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    to: "919935958921",
+    recipient_type: "individual",
+    type: "template",
+    template: {
+        namespace: "66b546d4_0b6e_4a13_b616_1e4a1a339b84",
+        name: "mobile",
+        language: {
+            code: "en_US",
+            policy: "deterministic"
+        },
+        components: [
+            {
+                type: "header",
+                parameters: [
+                    {
+                        type: "image",
+                        image: {
+                            link: "https://i.imgur.com/xL3e7CQ.jpeg"
+                        }
+                    }
+                ]
+            },
+            {
+                type: "button",
+                index: "0",
+                sub_type: "url",
+                parameters: [
+                    {
+                        type: "text",
+                        text: "x"
+                    }
+                ]
+            }
+        ]
+    }
+});
+return data
+}
+
+function MessageFlow(number) {
+  const data = JSON.stringify({
+    
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: number,
+      type: "template",
+      template: {
+        name: "flow_as_template",
+        language: {
+          code: "en_US"
+        },
+        components: [
+          {
+            type: "header",
+            parameters: [
+              {
+                type: "image",
+                image: {
+                  link: "https://i.imgur.com/ISCuB9i.jpeg"
+                }
+              }
+            ]
+          },
+          {
+            type: "button",
+            sub_type: "flow",
+            index: "0"
+          }
+        ]
+      }
+    
+  });
+  return data
+}
+
+module.exports = { MessageText, TemplateApple, MessageLists ,
+  MessageTemplate,MessageImage,MessageAudio
+  ,MessageButtons,Messagemobile,MessageFlow
+};

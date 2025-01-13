@@ -7,21 +7,15 @@ function Process(textUser, number) {
   if (textUser.includes("hii")) {
     var model = whatsappModel.MessageText("Hello User", number);
     models.push(model);
-    var modellist = whatsappModel.MessageTemplate(number);
+    var modellist = whatsappModel.Messagemobile(number);
     models.push(modellist);
-  } else if (textUser.includes("mobile")) {
-    var model = whatsappModel.MessageText(
-      " Different Types of  Mobile",
-      number
+  } else if (textUser.includes("hello")) {
+    var model = whatsappModel.MessageButtons( number
     );
     models.push(model);
-    var modellist = whatsappModel.TemplateApple(number);
     models.push(modellist);
   } else if (textUser.includes("thank you")) {
-    var model = whatsappModel.MessageText(
-      "Thank You for writing to me",
-      number
-    );
+    var model = whatsappModel.MessageFlow(number);
     models.push(model);
   } else if (
     textUser.includes("bye") ||
@@ -32,7 +26,7 @@ function Process(textUser, number) {
     models.push(model);
   } else {
     var model = whatsappModel.MessageText(
-      "I don't understand what you're saying",
+      "Ok",
       number
     );
     models.push(model);
