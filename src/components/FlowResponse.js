@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const FlowResponse = ({ message }) => {
   // Parse the message if it's a string
   let parsedMessage;
   try {
-    parsedMessage = typeof message === 'string' ? JSON.parse(message) : message;
+    parsedMessage = typeof message === "string" ? JSON.parse(message) : message;
   } catch (error) {
     console.error("Invalid JSON format:", error);
     parsedMessage = {};
