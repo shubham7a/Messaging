@@ -10,6 +10,22 @@ function MessageText(textResponse, number) {
   return data;
 }
 
+function ReplyMessage(textResponse, number,message_id) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    to: number,
+    type: "text",
+    text: {
+      body: textResponse,
+    },
+    context: {
+      message_id: message_id,
+    },
+  });
+  return data;
+}
+
+
 function MessageImage(number) {
   const data = JSON.stringify({
     messaging_product: "whatsapp",
@@ -180,7 +196,7 @@ function MessageButtons(number) {
 function Messagemobile(number) {
   const data = JSON.stringify({
     messaging_product: "whatsapp",
-    to: "919935958921",
+    to: number,
     recipient_type: "individual",
     type: "template",
     template: {
@@ -226,7 +242,7 @@ function MessageFlow(number) {
     to: number,
     type: "template",
     template: {
-      name: "flow_as_template",
+      name: "trai",
       language: {
         code: "en_US",
       },
@@ -246,7 +262,7 @@ function MessageFlow(number) {
           type: "button",
           sub_type: "flow",
           index: "0",
-        },
+        }
       ],
     },
   });
@@ -263,4 +279,5 @@ module.exports = {
   MessageButtons,
   Messagemobile,
   MessageFlow,
+  ReplyMessage,
 };

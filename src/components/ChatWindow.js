@@ -83,7 +83,7 @@ const ChatWindow = ({ currentChat }) => {
             {messages[currentChat]?.map((msg, index) => (
               <div
                 key={index}
-                className={`p-3 my-2 rounded-lg max-w-[75%] break-words whitespace-pre-line leading-relaxed ${
+                className={`p-3 my-2 rounded-lg max-w-[55%] break-words whitespace-pre-line leading-relaxed ${
                   msg.sender === "user"
                     ? "ml-auto bg-green-400 text-white"
                     : "mr-auto bg-white text-black"
@@ -118,7 +118,7 @@ const ChatWindow = ({ currentChat }) => {
                     <source src={msg.audio} type="audio/mpeg" />
                   </audio>
                 )}
-                {msg.type === "template" && msg.text === "flow_as_template" && (
+                {msg.type === "template" && msg.text === "trai" && (
                   <FlowTemplate image={msg.templateimage} />
                 )}
                 <br />

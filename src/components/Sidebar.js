@@ -15,7 +15,7 @@ const Sidebar = ({ setCurrentChat }) => {
     "9717537597",
     "9935958921",
     "9369157305",
-    "8081969092",
+    "6387909754",
   ];
 
   const handleLogout = () => {

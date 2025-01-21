@@ -1,7 +1,7 @@
 const whatsappModel = require("../shared/whatsappmodels");
 const whatsappService = require("../services/whatsappServices");
 
-function Process(textUser, number) {
+function Process(textUser, number,message_id) {
   textUser = textUser.toLowerCase();
   var models = [];
   if (textUser.includes("hii")) {
@@ -10,10 +10,8 @@ function Process(textUser, number) {
     var modellist = whatsappModel.Messagemobile(number);
     models.push(modellist);
   } else if (textUser.includes("hello")) {
-    var model = whatsappModel.MessageButtons( number
-    );
+    var model = whatsappModel.ReplyMessage("Hello. How are you?", number,message_id);
     models.push(model);
-    models.push(modellist);
   } else if (textUser.includes("thank you")) {
     var model = whatsappModel.MessageFlow(number);
     models.push(model);

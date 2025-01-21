@@ -1,14 +1,14 @@
 const axios = require("axios");
 const { io } = require("../SocketIO/server");
 const { getAsiaKolkataTime } = require("../controllers/time");
-
+require("dotenv").config();
 function SendMessageWhatsApp(data) {
   const url = "https://graph.facebook.com/v21.0/173000262573577/messages";
 
   const headers = {
     "Content-Type": "application/json",
     Authorization:
-      "Bearer EAANHvhSji6cBO8qOA1AiGi3UtIFVsOUxiJCQjCzYQ149yICHjZARAIfnSdSWRH1GvA5uoToxFx605oE0QmuCZA5yVpA4wCHQ69U57FKMwDUv6hGwzc2WSaLt7ZBfPxndJ50CDiuCRgGOn0F19dh324fDcI71GiLLJ4KWyw1WZCGrZCl0Qn2wABtgVeIIwn0QbIpo8daX0Hm5ZCpS2nktSXTFf8mLO6TBDutlG3yu3ZBjAEZD",
+      `Bearer ${process.env.ACCESS_TOKEN}`,
   };
 
   axios

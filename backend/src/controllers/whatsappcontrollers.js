@@ -10,6 +10,7 @@ const { type } = require("os");
 const { time } = require("console");
 const axios = require("axios");
 
+require("dotenv").config();
 // Verify token
 const verfiToken = (req, res) => {
   try {
@@ -65,7 +66,7 @@ const ReceivedMessage = async (req, res) => {
       io.emit("message", newMessage);
 
       if (text) {
-        processMessage.Process(text, number);
+        processMessage.Process(text, number,message_id );
       }
 
       // Send read receipt
@@ -79,7 +80,7 @@ const ReceivedMessage = async (req, res) => {
         {
           headers: {
             Authorization:
-              "Bearer EAANHvhSji6cBO8qOA1AiGi3UtIFVsOUxiJCQjCzYQ149yICHjZARAIfnSdSWRH1GvA5uoToxFx605oE0QmuCZA5yVpA4wCHQ69U57FKMwDUv6hGwzc2WSaLt7ZBfPxndJ50CDiuCRgGOn0F19dh324fDcI71GiLLJ4KWyw1WZCGrZCl0Qn2wABtgVeIIwn0QbIpo8daX0Hm5ZCpS2nktSXTFf8mLO6TBDutlG3yu3ZBjAEZD",
+            `Bearer ${process.env.ACCESS_TOKEN}`,
           },
         }
       );
