@@ -11,6 +11,7 @@ const { time } = require("console");
 const axios = require("axios");
 
 require("dotenv").config();
+
 // Verify token
 const verfiToken = (req, res) => {
   try {
@@ -30,8 +31,8 @@ const verfiToken = (req, res) => {
 
 // Handle incoming messages
 const ReceivedMessage = async (req, res) => {
-  // console.log("Incoming Webhook Payload:", JSON.stringify(req.body, null, 2));
-
+  console.log("Incoming Webhook Payload:", JSON.stringify(req.body, null, 2));
+  const GRAPH_API_TOKEN = process.env.ACCESS_TOKEN;
   try {
     const entry = req.body["entry"][0];
     const changes = entry["changes"][0];
@@ -66,8 +67,70 @@ const ReceivedMessage = async (req, res) => {
       io.emit("message", newMessage);
 
       if (text) {
-        processMessage.Process(text, number,message_id );
+        processMessage.Process(text, number, message_id);
       }
+
+      // if (text) {
+
+      //   if (
+      //     type === "text" &&
+      //     text.toLowerCase().includes("appointment")
+      //   ) {
+      //     await axios({
+      //       method: "POST",
+      //       url: `https://graph.facebook.com/v21.0/173000262573577/messages`,
+      //       headers: {
+      //         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      //       },
+      //       data: {
+      //         messaging_product: "whatsapp",
+      //         to: number,
+      //         type: "interactive",
+      //         interactive: {
+      //           type: "flow",
+      //           header: {
+      //             type: "text",
+      //             text: "Hello there 👋",
+      //           },
+      //           body: {
+      //             text: "Ready to transform your space? Schedule a personalized consultation with our expert team!",
+      //           },
+      //           footer: {
+      //             text: "Click the button below to proceed",
+      //           },
+      //           action: {
+      //             name: "flow",
+      //             parameters: {
+      //               flow_id: "2118668205283531",
+      //               flow_message_version: "3",
+      //               flow_token: "Trai",
+      //               flow_cta: "Book an appointment",
+      //               flow_action: "data_exchange",
+      //             },
+      //           },
+      //         },
+      //       },
+      //     });
+      //   }
+
+      //   if (
+      //     type === "interactive" && response2 === "flow"
+      //   ) {
+      //     await axios({
+      //       method: "POST",
+      //       url: `https://graph.facebook.com/v21.0/173000262573577/messages`,
+      //       headers: {
+      //         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      //       },
+      //       data: {
+      //         messaging_product: "whatsapp",
+      //         to: number,
+      //         text: { body: "You've successfully booked an appointment" },
+      //       },
+      //     });
+      //   }
+
+      // }
 
       // Send read receipt
       await axios.post(
@@ -79,8 +142,7 @@ const ReceivedMessage = async (req, res) => {
         },
         {
           headers: {
-            Authorization:
-            `Bearer ${process.env.ACCESS_TOKEN}`,
+            Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
           },
         }
       );

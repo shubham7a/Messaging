@@ -12,10 +12,8 @@ const FlowResponse = ({ message }) => {
   }
   return (
     <div>
-      <h1><span className="font-bold">Email:</span> {parsedMessage.screen_0_Email_2}</h1>
-      <h1><span className="font-bold">First Name:</span> {parsedMessage.screen_0_First_0}</h1>
-      <h1><span className="font-bold">Last Name:</span> {parsedMessage.screen_0_Last_1}</h1>
-      <h1><span className="font-bold">How did you hear about us:</span> {parsedMessage.screen_1_Choose_0.replace(/^3_/, "")}</h1>
+      <h4>Flow Response</h4>
+      <pre>{JSON.stringify(parsedMessage, null, 2)}</pre>
     </div>
   );
 };

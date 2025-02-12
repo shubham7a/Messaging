@@ -9,6 +9,7 @@ import Template from "./Template";
 import MobileTemplate from "./MobileTemplate";
 import FlowTemplate from "./FlowTemplate";
 import FlowResponse from "./FlowResponse";
+import FlowInteractive from "./FlowInteractive";
 
 const ChatWindow = ({ currentChat }) => {
   const [messages, setMessages] = useState({});
@@ -92,19 +93,23 @@ const ChatWindow = ({ currentChat }) => {
               >
                 {msg.type === "text" && msg.text}
                 {msg.response2 === "flow" &&
-                  msg.sender === "whatsapp-message" && (
+                  msg.sender === "whatsapp-message" &&
+                  msg.type === "interactive" && (
                     <FlowResponse message={msg.response1} />
                   )}
                 {msg.type === "interactive" &&
                   msg.sender === "whatsapp-message" &&
                   msg.text}
-                {msg.type === "interactive" && msg.sender === "user" && (
-                  <Interactive
-                    button1={msg.button_1}
-                    button2={msg.button_2}
-                    text={msg.interactiveText}
-                  />
-                )}
+                {msg.type === "interactive" &&
+                  msg.sender === "user" &&
+                  msg.text === "Interactive: button" && (
+                    <Interactive
+                      button1={msg.button_1}
+                      button2={msg.button_2}
+                      text={msg.interactiveText}
+                    />
+                  )}
+                {}
                 {msg.type === "template" && msg.text === "hello_world" && (
                   <Hello_World />
                 )}
@@ -121,6 +126,15 @@ const ChatWindow = ({ currentChat }) => {
                 {msg.type === "template" && msg.text === "trai" && (
                   <FlowTemplate image={msg.templateimage} />
                 )}
+                {msg.type === "interactive" &&
+                  msg.sender === "user" &&
+                  msg.action === "flow" && (
+                    <FlowInteractive
+                      text={msg.interactiveText}
+                      header={msg.header}
+                      footer={msg.footer}
+                    />
+                  )}
                 <br />
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-black ">

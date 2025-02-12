@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiLogOut } from "react-icons/fi";
@@ -36,7 +35,7 @@ const Sidebar = ({ setCurrentChat }) => {
       <div className="w-1/4 md:w-64 text-white flex flex-col p-4 h-full overflow-y-auto">
         <div className="flex justify-between mb-6 p-3 bg-gray-700 rounded-lg">
           <h1 className="text-xl font-semibold ">Chat</h1>
-          <span className="m-[2px] p-[1px]" >{user.PhoneNumber}</span>
+          <span className="m-[2px] p-[1px]">{user.PhoneNumber}</span>
           <div
             className="relative"
             onMouseEnter={() => handleMouseEnter("Logout")}
@@ -69,7 +68,10 @@ const Sidebar = ({ setCurrentChat }) => {
 
         <div className="mt-auto space-y-6">
           <div className="space-y-1">
-            <label htmlFor="From" className="block text-gray-300 text-sm font-medium">
+            <label
+              htmlFor="From"
+              className="block text-gray-300 text-sm font-medium"
+            >
               From
             </label>
             <input
@@ -81,14 +83,19 @@ const Sidebar = ({ setCurrentChat }) => {
           </div>
 
           <div className="space-y-1">
-            <label htmlFor="To" className="block text-gray-300 text-sm font-medium">
+            <label
+              htmlFor="To"
+              className="block text-gray-300 text-sm font-medium"
+            >
               To
             </label>
             <select
               id="To"
               className="w-full p-3 rounded bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="Choose a Phone Number">Choose a Phone Number</option>
+              <option value="Choose a Phone Number">
+                Choose a Phone Number
+              </option>
               {phoneNumbers.map((number, index) => (
                 <option key={index} value={number}>
                   {number}

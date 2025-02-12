@@ -10,7 +10,7 @@ function MessageText(textResponse, number) {
   return data;
 }
 
-function ReplyMessage(textResponse, number,message_id) {
+function ReplyMessage(textResponse, number, message_id) {
   const data = JSON.stringify({
     messaging_product: "whatsapp",
     to: number,
@@ -24,7 +24,6 @@ function ReplyMessage(textResponse, number,message_id) {
   });
   return data;
 }
-
 
 function MessageImage(number) {
   const data = JSON.stringify({
@@ -262,8 +261,173 @@ function MessageFlow(number) {
           type: "button",
           sub_type: "flow",
           index: "0",
-        }
+        },
       ],
+    },
+  });
+  return data;
+}
+
+function flowMessage(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    to: number,
+    type: "interactive",
+    interactive: {
+      type: "flow",
+      header: {
+        type: "text",
+        text: "Hello there 👋",
+      },
+      body: {
+        text: "Ready to transform your space? Schedule a personalized consultation with our expert team!",
+      },
+      footer: {
+        text: "Click the button below to proceed",
+      },
+      action: {
+        name: "flow",
+        parameters: {
+          flow_id: "588779217462262",
+          flow_message_version: "3",
+          flow_token: "Trai",
+          flow_cta: "Insurance",
+          flow_action: "data_exchange",
+        },
+      },
+    },
+  });
+  return data;
+}
+
+function Catalog(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: number,
+    type: "template",
+    template: {
+      name: "mobile_catalog",
+      language: { code: "en_US" },
+      components: [
+        {
+          type: "button",
+          sub_type: "CATALOG",
+          index: 0,
+          parameters: [
+            {
+              type: "action",
+              action: { thumbnail_product_retailer_id: "0j7pqgnivr" },
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  return data;
+}
+
+function multiproductcatalog(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: number,
+    type: "interactive",
+    interactive: {
+      type: "product_list",
+      header: {
+        type: "text",
+        text: "🔥 Featured Products",
+      },
+      body: {
+        text: "Check out our latest products below:",
+      },
+      footer: {
+        text: "🛒 Shop Now",
+      },
+      action: {
+        catalog_id: "1098367448423889",
+        sections: [
+          {
+            title: "Best Sellers",
+            product_items: [
+              { product_retailer_id: "0j7pqgnivr" },
+              { product_retailer_id: "sgfk3ti999" },
+            ],
+          },
+        ],
+      },
+    },
+  });
+
+  return data;
+}
+
+function LTO(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: number,
+    type: "template",
+    template: {
+      name: "limited_offer",
+      language: { code: "en_US" },
+      components: [
+        {
+          type: "header",
+          parameters: [
+            {
+              type: "image",
+              image: { link: "https://i.imgur.com/ISCuB9i.jpeg" }, // Replace with your image ID
+            },
+          ],
+        },
+        {
+          type: "body",
+          parameters: [
+            { type: "text", text: "Pablo" }, // Customer Name
+            { type: "text", text: "CARIBE25" }, // Offer Code
+          ],
+        },
+        {
+          type: "LIMITED_TIME_OFFER",
+          parameters: [
+            {
+              type: "LIMITED_TIME_OFFER",
+              limited_time_offer: { expiration_time_ms: 1209600000 }, // 14 days in milliseconds
+            },
+          ],
+        },
+        {
+          type: "button",
+          sub_type: "copy_code",
+          index: 0,
+          parameters: [
+            { type: "coupon_code", coupon_code: "CARIBE25" }, // Coupon Code
+          ],
+        },
+      ],
+    },
+  });
+  return data;
+}
+
+function singleproductcatalog(number) {
+  const data = JSON.stringify({
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: number,
+    type: "interactive",
+    interactive: {
+      type: "product",
+      body: {
+        text: "Check out our latest products!",
+      },
+      action: {
+        catalog_id: "1098367448423889",
+        product_retailer_id: "0j7pqgnivr",
+      },
     },
   });
   return data;
@@ -280,4 +444,9 @@ module.exports = {
   Messagemobile,
   MessageFlow,
   ReplyMessage,
+  flowMessage,
+  multiproductcatalog,
+  Catalog,
+  LTO,
+  singleproductcatalog,
 };

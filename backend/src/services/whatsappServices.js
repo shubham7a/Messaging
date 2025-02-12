@@ -7,8 +7,7 @@ function SendMessageWhatsApp(data) {
 
   const headers = {
     "Content-Type": "application/json",
-    Authorization:
-      `Bearer ${process.env.ACCESS_TOKEN}`,
+    Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
   };
 
   axios
@@ -35,12 +34,18 @@ function SendMessageWhatsApp(data) {
     let button_2 = null;
     let interactiveText = null;
     let templateimage = null;
+    let header = null;
+    let footer = null;
+    let action = null;
     // Handle different message types with null checks
     if (replymessage.type === "template") {
       messageText = replymessage.template.name;
       templateimage =
         replymessage.template.components[0].parameters[0].image.link;
-    } else if (replymessage.type === "interactive") {
+    } else if (
+      replymessage.type === "interactive" &&
+      replymessage.interactive.type === "button"
+    ) {
       interactiveText = replymessage.interactive?.body?.text || null;
       button_1 =
         replymessage.interactive?.action?.buttons?.[0]?.reply?.title || null;
@@ -49,6 +54,14 @@ function SendMessageWhatsApp(data) {
       messageText = `Interactive: ${
         replymessage.interactive?.type || "unknown"
       }`;
+    } else if (
+      replymessage.type === "interactive" &&
+      replymessage.interactive.type === "flow"
+    ) {
+      interactiveText = replymessage.interactive?.body?.text || null;
+      header = replymessage.interactive?.header?.text || null;
+      footer = replymessage.interactive?.footer?.text || null;
+      action = replymessage.interactive?.action?.name || null;
     } else if (replymessage.type === "text") {
       messageText = replymessage.text?.body || "No text content.";
     } else if (replymessage.type === "image") {
@@ -71,6 +84,9 @@ function SendMessageWhatsApp(data) {
       button_2,
       interactiveText,
       templateimage,
+      header,
+      footer,
+      action,
     };
 
     console.log("uiData", uiData);
