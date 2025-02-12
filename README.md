@@ -2,29 +2,29 @@
 
 
 ## How to Start the Project-:
-Follow these steps to set up and run the project after extracting the ZIP file or cloning the git repository:
+Follow these steps to set up and run the project after extracting the ZIP file or cloning the git repository -:
 # Step 1: Open the Terminal
 Open Visual Studio Code and launch the terminal.
-Navigate to the project directory by running:
-cd my-app
+Navigate to the project directory by running -:
+ cd my-app
 # Step 2: Install Dependencies
-Run the following command to install frontend dependencies:
-npm install
+Run the following command to install frontend dependencies -:
+ npm install
 # Step 3: Navigate to the Backend Directory
-Go back to the root folder:
-cd ../
-# Step 4 : Change the directory to the backend folder:
-cd backend
+Go back to the root folder -:
+ cd ../
+# Step 4 : Change the directory to the backend folder -:
+ cd backend
 # Install Backend Dependencies
-Install Express and other necessary dependencies:
-npm install express
+Install Express and other necessary dependencies -:
+ npm install express
 # Step 5: Start the Project
-Return to the root folder
-cd ../
+Return to the root folder -:
+ cd ../
 # Run the following command to start both the frontend and backend
-npm run dev
+ npm run dev
 # Run the only Frontend the command are
-npm run start
+ npm run start
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
